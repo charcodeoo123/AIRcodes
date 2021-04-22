@@ -13,4 +13,4 @@ while True:
     else:
         print("{}'C  {}%".format(T,H))
     #DHT22 not responsive if delay to short
-    utime.sleep_ms(500)
+    utime.sleep_ms(1000)
