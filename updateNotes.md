@@ -1,10 +1,12 @@
 # AIRcodes
-DHT11(for testing) is working at a rate of 1 second. DHT22 rate of getting the data may be changed.
+Progress status:
+ - DHT22 finished
+ - kapton heaters 50%
+ - cosmic watch 0%
+ - blv interface 50%
 
 Further testing needed:
- - cosmic watch (without Nano, direct interface)
-          cosmic watch (with Nano, interface with the Nano. See Github by Spencer)
+ - cosmic watch (interface through pins)
  - SD card has a stable, consistent data
 
-Further information needed:
- - interfacing with BLV
+
