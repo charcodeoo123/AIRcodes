@@ -4,6 +4,7 @@ Progress status:
  - kapton heaters 50%
  - cosmic watch 0%
  - blv interface 50%
+ - SD card
 
 Further testing needed:
  - cosmic watch (interface through pins)
