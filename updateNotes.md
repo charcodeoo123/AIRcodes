@@ -12,3 +12,12 @@ Further testing needed:
  - heaters should be turned on when requested
 
 
+
+Setup:
+install both python 3 and pip.
+Library needed:
+-os
+-Time
+-Adafruit_DHT
+-I2C library(WiringPi)
+To be continued...
