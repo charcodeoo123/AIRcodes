@@ -1,9 +1,9 @@
 # AIRcodes
 Progress status:
  - DHT22 95%
- - kapton heaters 40%
- - cosmic watch 80% (transmitting data to Pi 3 and/or retrieving data from the sd card)
- - blv interface 50% (I2C connection)
+ - kapton heaters 95%
+ - cosmic watch 40% (transmitting data to Pi 3 and/or retrieving data from the sd card)
+ - blv interface 50% (USB connection) Serial library
  - Storing data into SD card 20%
 
 Further testing needed:
