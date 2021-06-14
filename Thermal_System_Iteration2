@@ -3,10 +3,10 @@ import board
 import RPi.GPIO as GPIO
 import Adafruit_DHT
 
-GPIO.setmode(GPIO.BOARD)
+#GPIO.setmode(GPIO.BOARD)
 GPIO.setmode(GPIO.BCM)
 
-kapton_heater = 2
+GPIO.setup(17, GPIO.OUT, initial=GPIO.LOW)
 
 #kaptonheaters = digitalio.DigitalInOut(board.D2)
 #kaptonheaters.direction = digitalio.Direction.OUTPUT
@@ -24,7 +24,7 @@ while True:
         print("Failed to retrieve data from DHT22")
 while True:
     if temperature < 0:
-        kaptonheater.value = True
+        GPIO.output(2, GPIO.HIGH)
         print ("Heating on")
     else:
         print ("Temperature okay")
