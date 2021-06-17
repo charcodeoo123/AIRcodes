@@ -5,7 +5,7 @@ GPIO.setmode(GPIO.BCM)
 
 led = 4
 
-GPIO.setup(MOSFET, GPIO.OUT)
+GPIO.setup(led, GPIO.OUT)
 
 GPIO.output(4, GPIO.HIGH)
 time.sleep(5)
