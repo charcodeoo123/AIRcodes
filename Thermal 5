@@ -15,7 +15,6 @@ DHT_SENSOR = Adafruit_DHT.DHT22
 
 print ("System On")
 
-
 def get_temp():
     while True:
         humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
@@ -25,7 +24,6 @@ def get_temp():
             return temperature
         else:
             print("Failed to retrieve data from DHT22")
-
 
 while True:
     temperature=get_temp()
