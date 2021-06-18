@@ -32,4 +32,5 @@ while True:
         GPIO.output(17, GPIO.HIGH)
         print ("heat is on")
     else:
+        GPIO.output(17, GPIO.LOW)
         print ("heat not on")
