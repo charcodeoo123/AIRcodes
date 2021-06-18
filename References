@@ -1,0 +1,5 @@
+https://learn.adafruit.com/make-it-hot-or-cold/circuitpython-hot #Similiar Kapton Code
+https://daycounter.com/Calculators/Heat-Sink-Temperature-Calculator.phtml #Heat Sink Temperature Calculator
+https://learn.adafruit.com/rgb-led-strips/usage #Reference for code
+  https://learn.adafruit.com/rgb-led-strips/circuitpython-code #Reference for MOSFET wiring
+https://circuitpython.readthedocs.io/en/latest/shared-bindings/analogio/ #analogio library
