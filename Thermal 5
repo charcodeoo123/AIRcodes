@@ -28,7 +28,7 @@ def get_temp():
 while True:
     temperature=get_temp()
     time.sleep(2)
-    if temperature >= 0:
+    if temperature >= 0: #For testing, shall switch
         GPIO.output(17, GPIO.HIGH)
         print ("heat is on")
     else:
