@@ -21,3 +21,12 @@ Library needed:
 -Adafruit_DHT
 -I2C library(WiringPi)
 To be continued...
+
+
+MOSFET gate opens for LED, LED light turns on with the code, not for the KH.
+Thermal 5 code(LED): 
+(1) current - 0.35A voltage - 5V
+(2) current - 3A    voltage - 5V using multimeter
+LED/pwr supply shorted when using multimeter
+
+LED lights start out dimmed without resistor, lights keep brightening
