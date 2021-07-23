@@ -1,4 +1,4 @@
-# ls /dev/tty* to find serial port for arduino
+ # ls /dev/tty* to find serial port for arduino
 # python3 -m pip install pyserial
 # sudo apt install python3-pip
 
