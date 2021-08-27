@@ -231,7 +231,7 @@ if mode == 1:
 			print('...SDcard intialized correctly.')
 			# This happens if the SDCar.ino is uploaded and it sees an sdcard.
 			header1a = globals()['Det%s' % str(i)].readline()
-			globals()['Det%s' % str(i)].write('write') 
+			globals()['Det%s' % str(i)].write(b'write')
 			header1b = globals()['Det%s' % str(i)].readline()
 			header1 = globals()['Det%s' % str(i)].readline()
 			#header1 = globals()['Det%s' % str(i)].readline()
@@ -283,10 +283,16 @@ if mode == 1:
 
 	while True:
 		for i in range(nDetectors):
-			if globals()['Det%s' % str(i)].inWaiting():
+			if globals()['Det%s' % str(i)].in_waiting:
 				data = globals()['Det%s' % str(i)].readline().replace(b'\rb\n',b'')    # Wait and read data 
 				file.write(str(datetime.now()).encode()+b" "+data+b" "+detector_name_list[i]+b'\n')
 				globals()['Det%s' % str(i)].write(b'got-it') 
+        #datetime.datetime.now
+	        #datetime.datetime.now(tz=pytz.UTC)
+	#datetime.datetime.today()
+	#datetime.datetime.utcnow()
+	#pip install pytz
+	#import pytz
 
 	for i in range(nDetectors):
 		globals()['Det%s' % str(i)].close()     
@@ -363,11 +369,11 @@ if mode == 3:
 
         if ComPort.readline().strip() == 'CosmicWatchDetector':
             time.sleep(1)
-            ComPort.write("remove")   
+            ComPort.write(b"remove")   
             while True:
                 data = ComPort.readline()    # Wait and read data 
                 print(data)
-                if data == 'Done...\r\n':
+                if data == b'Done...\r\n':
                     print("Finished deleting files.")
                     break
             ComPort.close()     
