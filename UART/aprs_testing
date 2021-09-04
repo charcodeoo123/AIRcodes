@@ -193,7 +193,6 @@ print("The selected port(s) is(are): ")
 for i in range(nDetectors):	 
 	print('\t['+str(ArduinoPort[i])+']' +port_name_list[i])
 
-send_string = (str(datetime.now()).encode()+b" "+data+b" "+detector_name_list[i]+b'\n')
 ser = serial.Serial('/dev/ttyUSB1', 9600, timeout=1)
 
 if mode == 1:
