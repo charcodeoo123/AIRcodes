@@ -17,7 +17,7 @@ import multiprocessing
 import math
 import random
 import _thread
-import serial 
+import serial
 
 '''
 This is a Websocket server that forwards signals from the detector to any client connected.
@@ -26,7 +26,7 @@ Please run `pip install tornado` with python of version 2.7.9 or greater to inst
 Run it with `python detector-server.py`
 Written by Pawel Przewlocki (pawel.przewlocki@ncbj.gov.pl).
 Based on http://fabacademy.org/archives/2015/doc/WebSocketConsole.html
-''' 
+'''
 
 def print_help1():
     print('\n===================== HELP =======================')
@@ -52,11 +52,11 @@ class DataCollectionProcess(multiprocessing.Process):
         self.comport.baudrate = 9600          # set Baud rate
         self.comport.bytesize = 8             # Number of data bits = 8
         self.comport.parity   = 'N'           # No parity
-        self.comport.stopbits = 1 
+        self.comport.stopbits = 1
 
     def close(self):
         self.comport.close()
-        
+
     def nextTime(self, rate):
         return -math.log(1.0 - random.random()) / rate
 
@@ -65,7 +65,7 @@ def RUN(bg):
     while True:
         data = bg.comport.readline()
         bg.queue.put(str(datetime.now())+" "+data)
-    
+
 class WSHandler(tornado.websocket.WebSocketHandler):
     def __init__ (self, application, request, **kwargs):
         super(WSHandler, self).__init__(application, request, **kwargs)
@@ -75,20 +75,20 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         print ('New connection opened from ' + self.request.remote_ip)
         clients.append(self)
         print ('%d clients connected' % len(clients))
-      
+
     def on_message(self, message):
         print ('message received:  %s' % message)
         if message == 'StartData':
             self.sending = True
         if message == 'StopData':
             self.sending = False
- 
+
     def on_close(self):
         self.sending = False
         clients.remove(self)
         print ('Connection closed from ' + self.request.remote_ip)
         print ('%d clients connected' % len(clients))
- 
+
     def check_origin(self, origin):
         return True
 
@@ -99,12 +99,12 @@ def checkQueue():
         for client in clients:
             if client.sending:
                 client.write_message(message)
- 
+
 
 def signal_handler(signal, frame):
         print('You pressed Ctrl+C!')
         queue.close()     #comPort.close()
-        file.close() 
+        file.close()
         sys.exit(0)
 def serial_ports():
     """ Lists serial port names
@@ -125,7 +125,7 @@ def serial_ports():
         sys.exit(0)
     result = []
     for port in ports:
-        try: 
+        try:
             s = serial.Serial(port)
             s.close()
             result.append(port)
@@ -190,7 +190,7 @@ if ArduinoPort == 'h':
     sys.exit()
 
 print("The selected port(s) is(are): ")
-for i in range(nDetectors):	 
+for i in range(nDetectors):	
 	print('\t['+str(ArduinoPort[i])+']' +port_name_list[i])
 
 
@@ -209,17 +209,17 @@ if mode == 1:
 	for i in range(nDetectors):
 		signal.signal(signal.SIGINT, signal_handler)
 		globals()['Det%s' % str(i)] = serial.Serial(str(port_name_list[i]))
-		globals()['Det%s' % str(i)].baudrate = 9600    
+		globals()['Det%s' % str(i)].baudrate = 9600
 		globals()['Det%s' % str(i)].bytesize = 8             # Number of data bits = 8
 		globals()['Det%s' % str(i)].parity   = 'N'           # No parity
-		globals()['Det%s' % str(i)].stopbits = 1 
+		globals()['Det%s' % str(i)].stopbits = 1
 
 		time.sleep(1)
-		#globals()['Det%s' % str(i)].write('write')  
+		#globals()['Det%s' % str(i)].write('write')
 
 		counter = 0
 
-		header1 = globals()['Det%s' % str(i)].readline()     # Wait and read data 
+		header1 = globals()['Det%s' % str(i)].readline()     # Wait and read data
 		if b'SD initialization failed' in header1:
 			print('...SDCard.ino detected.')
 			print('...SDcard initialization failed.')
@@ -235,16 +235,16 @@ if mode == 1:
 			header1b = globals()['Det%s' % str(i)].readline()
 			header1 = globals()['Det%s' % str(i)].readline()
 			#header1 = globals()['Det%s' % str(i)].readline()
-		header2 = globals()['Det%s' % str(i)].readline()     # Wait and read data 
-		header3 = globals()['Det%s' % str(i)].readline()     # Wait and read data 
-		header4 = globals()['Det%s' % str(i)].readline()     # Wait and read data 
-		header5 = globals()['Det%s' % str(i)].readline()     # Wait and read data 
+		header2 = globals()['Det%s' % str(i)].readline()     # Wait and read data
+		header3 = globals()['Det%s' % str(i)].readline()     # Wait and read data
+		header4 = globals()['Det%s' % str(i)].readline()     # Wait and read data
+		header5 = globals()['Det%s' % str(i)].readline()     # Wait and read data
 
 		det_name = globals()['Det%s' % str(i)].readline().replace(b'\r\n',b'')
 		#print(det_name)
 		if b'Device ID: ' in det_name:
 			det_name = det_name.split(b'Device ID: ')[-1]
-		detector_name_list.append(det_name)    # Wait and read data 
+		detector_name_list.append(det_name)    # Wait and read data
 
 
 	file = open(fname, "wb",0)
@@ -278,25 +278,19 @@ if mode == 1:
 	#print(string_of_names)
 	file.write(b'Device ID(s): '+string_of_names.encode())
 	file.write(b'\n')
-	#detector_name = ComPort.readline()    # Wait and read data 
+	#detector_name = ComPort.readline()    # Wait and read data
 	#file.write("Device ID: "+str(detector_name))
 
 	while True:
 		for i in range(nDetectors):
 			if globals()['Det%s' % str(i)].in_waiting:
-				data = globals()['Det%s' % str(i)].readline().replace(b'\rb\n',b'')    # Wait and read data 
+				data = globals()['Det%s' % str(i)].readline().replace(b'\rb\n',b'')    # Wait and read data
 				file.write(str(datetime.now()).encode()+b" "+data+b" "+detector_name_list[i]+b'\n')
-				globals()['Det%s' % str(i)].write(b'got-it') 
-        #datetime.datetime.now
-	        #datetime.datetime.now(tz=pytz.UTC)
-	#datetime.datetime.today()
-	#datetime.datetime.utcnow()
-	#pip install pytz
-	#import pytz
+				globals()['Det%s' % str(i)].write(b'got-it')
 
 	for i in range(nDetectors):
-		globals()['Det%s' % str(i)].close()     
-	file.close()  
+		globals()['Det%s' % str(i)].close()
+	file.close()
 
 if mode == 2:
 	
@@ -314,7 +308,7 @@ if mode == 2:
 	ComPort.baudrate = 9600            # set Baud rate
 	ComPort.bytesize = 8               # Number of data bits = 8
 	ComPort.parity   = 'N'             # No parity
-	ComPort.stopbits = 1 
+	ComPort.stopbits = 1
 
 	if ComPort.readline().strip() == 'CosmicWatchDetector':
 		time.sleep(1)
@@ -323,31 +317,31 @@ if mode == 2:
 		print('\n-- Detector Name --')
 		print(detector_name)
 
-		ComPort.write("read") 
+		ComPort.write("read")
 		counter = 0
 
 
 		while True:
-			data = ComPort.readline()    # Wait and read data 
+			data = ComPort.readline()    # Wait and read data
 			#print(data)
 			if 'Done' in data:
-			    ComPort.close() 
-			    sys.exit() 
+			    ComPort.close()
+			    sys.exit()
 			elif 'opening:' in data:
 			    fname = dir_path + '/' + data.split(' ')[-1].split('.txt')[0]+'.txt'
-			    
+			
 			    print("Saving to: "+ fname)
 			    file = open(fname, "w",0)
 			    counter = 0
 
 
 			elif 'EOF' in data:
-			    file.close() 
+			    file.close()
 
 			else:
 			    file.write(data)
 			    counter +=1
-   
+
 	else:
 		print('--- Error ---')
 		print('You are trying to read from the SD card.')
@@ -365,18 +359,18 @@ if mode == 3:
         ComPort.baudrate = 9600          # set Baud rate
         ComPort.bytesize = 8             # Number of data bits = 8
         ComPort.parity   = 'N'           # No parity
-        ComPort.stopbits = 1 
+        ComPort.stopbits = 1
 
         if ComPort.readline().strip() == 'CosmicWatchDetector':
             time.sleep(1)
-            ComPort.write(b"remove")   
+            ComPort.write("remove")
             while True:
-                data = ComPort.readline()    # Wait and read data 
+                data = ComPort.readline()    # Wait and read data
                 print(data)
-                if data == b'Done...\r\n':
+                if data == 'Done...\r\n':
                     print("Finished deleting files.")
                     break
-            ComPort.close()     
+            ComPort.close()
             sys.exit()
 
         else:
@@ -392,10 +386,10 @@ if mode == 3:
         sys.exit()
 
 if mode == 4:
-    bg = DataCollectionProcess(queue) 
+    bg = DataCollectionProcess(queue)
     #bg.daemon = True
     #bg.start()
-    thread.start_new_thread(RUN,(bg,)) 
+    thread.start_new_thread(RUN,(bg,))
     #p=multiprocessing.Process(target=RUN)
     #p.start()
     #server stuff
